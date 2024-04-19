@@ -13,9 +13,20 @@ public class PlayerController : MonoBehaviour
         id = tag;
         GameManager.updateLifeText?.Invoke(life, id);
         canDamage = true;
+        Hide.isHide += Coroutine;
     }
     public void OnAttackEnemy()
     {
         HealthSystem.ModifyHealth?.Invoke(damage, id);
+    }
+    public void Coroutine()
+    {
+        StartCoroutine(TimeToHide());
+    }
+    IEnumerator TimeToHide()
+    {
+        canDamage = false;
+        yield return new WaitForSecondsRealtime(3.00f);
+        canDamage = true;
     }
 }
